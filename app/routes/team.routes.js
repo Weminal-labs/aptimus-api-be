@@ -15,5 +15,14 @@ module.exports = (app) => {
   // Find all teams by user ID
   router.get("/all-teams/:id_user", teams.findAllTeamByUser);
 
+  // Get all members of a team
+  router.get("/:teamId/members", teams.getAllMembers);
+
+  // Add a new member to a team by email
+  router.post("/:teamId/add-member", teams.addMemberByEmail);
+
+  // Remove a member from a team
+  router.delete("/:teamId/members/:userId", teams.removeMember);
+
   app.use("/api/team", router);
 };

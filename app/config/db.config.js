@@ -7,3 +7,4 @@ module.exports = {
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
 };
+

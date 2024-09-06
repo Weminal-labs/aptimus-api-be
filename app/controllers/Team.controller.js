@@ -74,3 +74,63 @@ exports.findAllTeamByUser = (req, res) => {
     } else res.send(data);
   });
 };
+
+// Get all members of a team
+exports.getAllMembers = (req, res) => {
+  Team.getAllMembers(req.params.teamId, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `No members found for team with id ${req.params.teamId}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving members for team with id " + req.params.teamId
+        });
+      }
+    } else res.send(data);
+  });
+};
+
+// Add a new member to a team by email
+exports.addMemberByEmail = (req, res) => {
+  // Validate request
+  if (!req.body || !req.body.email || !req.params.teamId) {
+    res.status(400).send({
+      message: "Email and team ID are required!"
+    });
+    return;
+  }
+
+  Team.addMemberByEmail(req.params.teamId, req.body.email, (err, data) => {
+    if (err) {
+      res.status(500).send({
+        message: err.message || "An error occurred while adding the member to the team."
+      });
+    } else {
+      res.status(201).send({
+        message: "Member added successfully",
+        data: data
+      });
+    }
+  });
+};
+
+// Remove a member from a team
+exports.removeMember = (req, res) => {
+  Team.removeMember(req.params.teamId, req.params.userId, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Member with user ID ${req.params.userId} not found in team with ID ${req.params.teamId}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error removing member from team"
+        });
+      }
+    } else {
+      res.send({ message: "Member was removed successfully from the team!" });
+    }
+  });
+};

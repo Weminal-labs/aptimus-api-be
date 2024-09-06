@@ -3,10 +3,12 @@ const dbConfig = require("../config/db.config.js");
 
 var connection = mysql.createConnection(dbConfig);
 
-connection.connect((error) => { 
-  if(error) {
-    console.log("Error connecting to the database: " + error.code);
-    return
+connection.connect((error) => {
+  if (error) {
+    console.log(
+      "Error connecting to the database: " + error.code + error.message
+    );
+    return;
   }
 
   console.log("Successfully connected to the database.");
