@@ -9,5 +9,8 @@ module.exports = (app) => {
   // get user by email
   router.get("/get-by-email", users.findByEmail);
 
+  // New route for updating a user
+  router.put("/:id", users.update);
+
   app.use("/api/user", router);
 };

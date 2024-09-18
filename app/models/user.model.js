@@ -61,4 +61,27 @@ User.findByEmail = (email, result) => {
   });
 };
 
+User.updateWalletAddress = (id, walletAddress, result) => {
+  sql.query(
+    "UPDATE users SET wallet_address = ? WHERE id = ?",
+    [walletAddress, id],
+    (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+
+      if (res.affectedRows == 0) {
+        // not found User with the id
+        result({ kind: "not_found" }, null);
+        return;
+      }
+
+      console.log("updated user wallet address: ", { id: id, wallet_address: walletAddress });
+      result(null, { id: id, wallet_address: walletAddress });
+    }
+  );
+};
+
 module.exports = User;
