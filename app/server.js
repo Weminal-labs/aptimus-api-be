@@ -10,6 +10,11 @@ const app = express();
 var corsOptions = {
   origin: "https://aptimus-fe.vercel.app/", //(https://your-client-app.com)
   optionsSuccessStatus: 200,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  },
 };
 
 app.use(cors(corsOptions));
