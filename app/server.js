@@ -8,7 +8,8 @@ const application = require("./routes/application.routes");
 const app = express();
 
 var corsOptions = {
-  origin: "*",
+  origin: "https://aptimus-fe.vercel.app/", //(https://your-client-app.com)
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
